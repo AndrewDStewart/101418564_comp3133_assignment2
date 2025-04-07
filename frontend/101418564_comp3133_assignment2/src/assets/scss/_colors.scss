@@ -1,0 +1,35 @@
+// src/assets/scss/_colors.scss
+
+// Define your color palette
+$muted-teal: #4d8c8c;
+$muted-teal-light: #7ab9b9;
+$muted-teal-dark: #2a6060;
+
+$dark-grey: #333333;
+$dark-grey-light: #555555;
+$dark-grey-dark: #222222;
+
+$deep-salmon: #e57373;
+$deep-salmon-light: #ffa4a2;
+$deep-salmon-dark: #af4448;
+
+$white: #ffffff;
+$light-grey: #f5f5f5;
+
+// Export as CSS variables
+:root {
+  --muted-teal: #{$muted-teal};
+  --muted-teal-light: #{$muted-teal-light};
+  --muted-teal-dark: #{$muted-teal-dark};
+  
+  --dark-grey: #{$dark-grey};
+  --dark-grey-light: #{$dark-grey-light};
+  --dark-grey-dark: #{$dark-grey-dark};
+  
+  --deep-salmon: #{$deep-salmon};
+  --deep-salmon-light: #{$deep-salmon-light};
+  --deep-salmon-dark: #{$deep-salmon-dark};
+  
+  --white: #{$white};
+  --light-grey: #{$light-grey};
+}

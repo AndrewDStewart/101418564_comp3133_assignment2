@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Employee Details</h2>
+
+<mat-dialog-content>
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
+
+<div *ngIf="!loading && employee" class="employee-details">
+  <div class="profile-image-container">
+    <img 
+      [src]="employee.profilePicture || 'assets/default-avatar.png'" 
+      alt="Profile picture" 
+      class="profile-image">
+  </div>
+
+  <div class="details-grid">
+    <div class="detail-item">
+      <span class="label">First Name:</span>
+      <span class="value">{{ employee.firstName }}</span>
+    </div>
+    
+    <div class="detail-item">
+      <span class="label">Last Name:</span>
+      <span class="value">{{ employee.lastName }}</span>
+    </div>
+    
+    <div class="detail-item">
+      <span class="label">Email:</span>
+      <span class="value">{{ employee.email }}</span>
+    </div>
+    
+    <div class="detail-item">
+      <span class="label">Position:</span>
+      <span class="value">{{ employee.position }}</span>
+    </div>
+    
+    <div class="detail-item">
+      <span class="label">Department:</span>
+      <span class="value">{{ employee.department }}</span>
+    </div>
+  </div>
+</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+<button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>
+

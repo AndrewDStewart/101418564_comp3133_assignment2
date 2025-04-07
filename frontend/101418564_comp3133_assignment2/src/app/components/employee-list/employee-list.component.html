@@ -1,0 +1,119 @@
+<div class="employee-list-container">
+  <div class="header">
+    <h1>Employee Management</h1>
+    <button mat-raised-button color="primary" (click)="addEmployee()">
+      <mat-icon>add</mat-icon> Add Employee
+    </button>
+  </div>
+  
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="searchForm" (ngSubmit)="searchEmployees()" class="search-form">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department">
+            <mat-option [value]="">All Departments</mat-option>
+            <mat-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Position</mat-label>
+          <mat-select formControlName="position">
+            <mat-option [value]="">All Positions</mat-option>
+            <mat-option *ngFor="let pos of positions" [value]="pos">{{ pos }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <div class="search-buttons">
+          <button mat-raised-button color="primary" type="submit">Search</button>
+          <button mat-button type="button" (click)="resetSearch()">Reset</button>
+        </div>
+      </form>
+      
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter by name, email, etc.">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+  
+      <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+  
+      <div class="mat-elevation-z8 table-container" *ngIf="!loading">
+        <table mat-table [dataSource]="dataSource" matSort>
+          
+          <!-- Profile Picture Column -->
+          <ng-container matColumnDef="profilePicture">
+            <th mat-header-cell *matHeaderCellDef> Photo </th>
+            <td mat-cell *matCellDef="let employee">
+              <img 
+                [src]="employee.profilePicture || 'assets/default-avatar.png'" 
+                alt="Profile picture" 
+                class="profile-thumbnail">
+            </td>
+          </ng-container>
+  
+          <!-- First Name Column -->
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+            <td mat-cell *matCellDef="let employee"> {{employee.firstName}} </td>
+          </ng-container>
+  
+          <!-- Last Name Column -->
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+            <td mat-cell *matCellDef="let employee"> {{employee.lastName}} </td>
+          </ng-container>
+  
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let employee"> {{employee.email}} </td>
+          </ng-container>
+  
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+            <td mat-cell *matCellDef="let employee"> {{employee.position}} </td>
+          </ng-container>
+  
+          <!-- Department Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+            <td mat-cell *matCellDef="let employee"> {{employee.department}} </td>
+          </ng-container>
+  
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let employee">
+              <button mat-icon-button color="primary" (click)="viewDetails(employee)" matTooltip="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" (click)="editEmployee(employee)" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteEmployee(employee)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+          <!-- Row shown when there is no matching data -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="7">No data matching the filter</td>
+          </tr>
+        </table>
+  
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  </div>
+  
+  

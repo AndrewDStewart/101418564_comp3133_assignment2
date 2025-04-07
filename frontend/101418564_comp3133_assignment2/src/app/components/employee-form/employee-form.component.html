@@ -1,0 +1,103 @@
+<div class="employee-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="form-layout">
+          <div class="form-fields">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" placeholder="First Name">
+              <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">
+                First name is required
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" placeholder="Last Name">
+              <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">
+                Last name is required
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" placeholder="Email">
+              <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Position</mat-label>
+              <mat-select formControlName="position">
+                <mat-option *ngFor="let pos of positions" [value]="pos">{{ pos }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeForm.get('position')?.hasError('required')">
+                Position is required
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Department</mat-label>
+              <mat-select formControlName="department">
+                <mat-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="employeeForm.get('department')?.hasError('required')">
+                Department is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          
+          <div class="profile-upload">
+            <div class="profile-preview">
+              <img 
+                [src]="imagePreview || 'assets/default-avatar.png'" 
+                alt="Profile preview" 
+                class="preview-image">
+            </div>
+            
+            <button 
+              type="button" 
+              mat-raised-button 
+              color="primary" 
+              (click)="fileInput.click()">
+              Upload Profile Picture
+            </button>
+            
+            <input 
+              hidden 
+              type="file" 
+              #fileInput 
+              (change)="onFileSelected($event)" 
+              accept="image/*">
+          </div>
+        </div>
+        
+        <div class="button-container">
+          <button mat-button type="button" (click)="cancel()">Cancel</button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="employeeForm.invalid || loading">
+            {{ isEditMode ? 'Update' : 'Add' }} Employee
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  </div>
+  
+  
